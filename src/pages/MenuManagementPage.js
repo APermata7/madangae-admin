@@ -79,8 +79,8 @@ const MenuManagementPage = () => {
 
     const menuDataToSend = {
       ...formData,
-      ingredients: formData.ingredients.split(',').map(item => item.trim()).filter(item => item),
-      tutorial: formData.tutorial.split(',').map(step => step.trim()).filter(step => step),
+      ingredients: formData.ingredients.replace(/\n/g, ',').split(',').map(item => item.trim()).filter(item => item),
+      tutorial: formData.tutorial.replace(/\n/g, ';').split(';').map(step => step.trim()).filter(step => step),
     };
 
     try {
