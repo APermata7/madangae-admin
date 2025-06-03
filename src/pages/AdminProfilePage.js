@@ -7,7 +7,8 @@ import { getAdminProfile, updateAdminProfile } from '../api/adminApi';
 
 // IMPORTANT: Replace with an actual Admin ID from your MongoDB database after seeding.
 // You can find this in MongoDB Compass under the 'admins' collection.
-const MOCK_ADMIN_ID = '6832ea310c1759e2c98c7c61'; // e.g., '66512c1c3f2d2b4a7c8e9d0b'
+const MOCK_ADMIN_ID = '683d7620260635de947a7cb7'; // ID yang baru 
+// e.g., '66512c1c3f2d2b4a7c8e9d0b'
 
 const AdminProfilePage = () => {
   const [adminProfile, setAdminProfile] = useState(null);
