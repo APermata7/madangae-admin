@@ -1,4 +1,4 @@
-import API_BASE_URL from './base';
+import { API_BASE_URL } from './base';
 import Cookies from 'js-cookie';
 import { getAuthToken, adminLogout, setAdminData } from '../utils/auth';
 

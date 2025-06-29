@@ -1,72 +1,83 @@
-// src/api/menuAdminApi.js
-import API_BASE_URL from './base';
+import { getAuthToken } from '../utils/auth';
+import Cookies from 'js-cookie';
+import { refreshCSRFToken } from './authApi'; // pastikan kamu export dari situ kalau belum
+
+const API_BASE_URL = 'http://localhost:5000/api/admin';
+
+const getAuthHeaders = () => {
+  const token = getAuthToken();
+  const csrfToken = Cookies.get('XSRF-TOKEN');
+  return {
+    'Content-Type': 'application/json',
+    Authorization: `Bearer ${token}`,
+    'x-csrf-token': csrfToken,
+  };
+};
 
 export const getAllMenusAdmin = async () => {
-    try {
-        const response = await fetch(`${API_BASE_URL}/admin/menus`);
-        if (!response.ok) {
-            throw new Error('Failed to fetch menus for admin');
-        }
-        const data = await response.json();
-        return data;
-    } catch (error) {
-        console.error('Error fetching menus for admin:', error);
-        throw error;
-    }
+  const response = await fetch(`${API_BASE_URL}/menus`, {
+    method: 'GET',
+    headers: getAuthHeaders(),
+    credentials: 'include',
+  });
+
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(errorData.message || 'Failed to fetch menus for admin');
+  }
+
+  return response.json();
 };
 
 export const addMenu = async (menuData) => {
-    try {
-        const response = await fetch(`${API_BASE_URL}/admin/menus`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(menuData),
-        });
-        const data = await response.json();
-        if (!response.ok) {
-            throw new Error(data.message || 'Failed to add menu');
-        }
-        return data;
-    } catch (error) {
-        console.error('Error adding menu:', error);
-        throw error;
-    }
+  await refreshCSRFToken();
+
+  const response = await fetch(`${API_BASE_URL}/menus`, {
+    method: 'POST',
+    headers: getAuthHeaders(),
+    credentials: 'include',
+    body: JSON.stringify(menuData),
+  });
+
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(errorData.message || 'Failed to add menu');
+  }
+
+  return response.json();
 };
 
-export const updateMenu = async (menuId, menuData) => {
-    try {
-        const response = await fetch(`${API_BASE_URL}/admin/menus/${menuId}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(menuData),
-        });
-        const data = await response.json();
-        if (!response.ok) {
-            throw new Error(data.message || 'Failed to update menu');
-        }
-        return data;
-    } catch (error) {
-        console.error('Error updating menu:', error);
-        throw error;
-    }
+export const updateMenu = async (id, menuData) => {
+  await refreshCSRFToken();
+
+  const response = await fetch(`${API_BASE_URL}/menus/${id}`, {
+    method: 'PUT',
+    headers: getAuthHeaders(),
+    credentials: 'include',
+    body: JSON.stringify(menuData),
+  });
+
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(errorData.message || 'Failed to update menu');
+  }
+
+  return response.json();
 };
 
-export const deleteMenu = async (menuId) => {
-    try {
-        const response = await fetch(`${API_BASE_URL}/admin/menus/${menuId}`, {
-            method: 'DELETE',
-        });
-        const data = await response.json();
-        if (!response.ok) {
-            throw new Error(data.message || 'Failed to delete menu');
-        }
-        return data;
-    } catch (error) {
-        console.error('Error deleting menu:', error);
-        throw error;
-    }
+export const deleteMenu = async (id) => {
+  await refreshCSRFToken();
+
+  const response = await fetch(`${API_BASE_URL}/menus/${id}`, {
+    method: 'DELETE',
+    headers: getAuthHeaders(),
+    credentials: 'include',
+  });
+
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(errorData.message || 'Failed to delete menu');
+  }
+
+  return response.json();
 };
