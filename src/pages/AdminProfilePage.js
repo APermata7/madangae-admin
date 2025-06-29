@@ -1,14 +1,8 @@
-// src/pages/AdminProfilePage.js
 import React, { useState, useEffect, useCallback } from 'react';
 import LoadingSpinner from '../components/common/LoadingSpinner';
 import ErrorMessage from '../components/common/ErrorMessage';
 import SuccessMessage from '../components/common/SuccessMessage';
 import { getAdminProfile, updateAdminProfile } from '../api/adminApi';
-
-// IMPORTANT: Replace with an actual Admin ID from your MongoDB database after seeding.
-// You can find this in MongoDB Compass under the 'admins' collection.
-const MOCK_ADMIN_ID = '683d7620260635de947a7cb7'; // ID yang baru 
-// e.g., '66512c1c3f2d2b4a7c8e9d0b'
 
 const AdminProfilePage = () => {
   const [adminProfile, setAdminProfile] = useState(null);
@@ -22,13 +16,7 @@ const AdminProfilePage = () => {
     setLoading(true);
     setError(null);
     try {
-      // Check if MOCK_ADMIN_ID is set before fetching
-      // if (MOCK_ADMIN_ID === '6832ea310c1759e2c98c7c61') {
-      //   setError('Please update MOCK_ADMIN_ID in AdminProfilePage.js with a real admin ID from your database.');
-      //   setLoading(false);
-      //   return;
-      // }
-      const data = await getAdminProfile(MOCK_ADMIN_ID);
+      const data = await getAdminProfile();
       setAdminProfile(data);
       setFormData({ name: data.name, email: data.email });
     } catch (err) {
@@ -49,10 +37,10 @@ const AdminProfilePage = () => {
     setSuccessMessage(null);
 
     try {
-      const response = await updateAdminProfile(MOCK_ADMIN_ID, formData);
+      const response = await updateAdminProfile(formData);
       setAdminProfile(response.admin);
       setSuccessMessage(response.message);
-      setIsEditing(false); // Exit editing mode
+      setIsEditing(false);
     } catch (err) {
       setError(err.message);
     } finally {
@@ -109,9 +97,7 @@ const AdminProfilePage = () => {
   return (
     <div style={containerStyle}>
       <h1>Admin Profile</h1>
-      <p style={{ fontSize: '0.9em', color: '#777', marginBottom: '20px', textAlign: 'center' }}>
-        (Using Admin ID: <span style={{ fontFamily: 'monospace', backgroundColor: '#eee', padding: '2px 5px', borderRadius: '4px' }}>{MOCK_ADMIN_ID}</span>)
-      </p>
+      
       {successMessage && <SuccessMessage message={successMessage} onClose={() => setSuccessMessage(null)} />}
 
       {!isEditing ? (
@@ -119,7 +105,20 @@ const AdminProfilePage = () => {
           <p><strong>Name:</strong> {adminProfile.name}</p>
           <p><strong>Email:</strong> {adminProfile.email}</p>
           <p><strong>Role:</strong> {adminProfile.role}</p>
-          <button onClick={() => setIsEditing(true)} style={{ marginTop: '20px' }}>Edit Profile</button>
+          <button 
+            onClick={() => setIsEditing(true)} 
+            style={{ 
+              marginTop: '20px',
+              padding: '8px 16px',
+              backgroundColor: '#4f46e5',
+              color: 'white',
+              border: 'none',
+              borderRadius: '4px',
+              cursor: 'pointer'
+            }}
+          >
+            Edit Profile
+          </button>
         </div>
       ) : (
         <form onSubmit={handleUpdateProfile}>
@@ -131,6 +130,12 @@ const AdminProfilePage = () => {
               value={formData.name || ''}
               onChange={handleChange}
               required
+              style={{
+                width: '100%',
+                padding: '8px',
+                borderRadius: '4px',
+                border: '1px solid #ddd'
+              }}
             />
           </div>
           <div style={formGroupStyle}>
@@ -141,11 +146,44 @@ const AdminProfilePage = () => {
               value={formData.email || ''}
               onChange={handleChange}
               required
+              style={{
+                width: '100%',
+                padding: '8px',
+                borderRadius: '4px',
+                border: '1px solid #ddd'
+              }}
             />
           </div>
           <div style={buttonGroupStyle}>
-            <button type="button" onClick={() => { setIsEditing(false); setFormData({ name: adminProfile.name, email: adminProfile.email }); }} style={{ backgroundColor: '#6b7280' }}>Cancel</button>
-            <button type="submit" disabled={loading}>
+            <button 
+              type="button" 
+              onClick={() => { 
+                setIsEditing(false); 
+                setFormData({ name: adminProfile.name, email: adminProfile.email }); 
+              }} 
+              style={{ 
+                padding: '8px 16px',
+                backgroundColor: '#6b7280',
+                color: 'white',
+                border: 'none',
+                borderRadius: '4px',
+                cursor: 'pointer'
+              }}
+            >
+              Cancel
+            </button>
+            <button 
+              type="submit" 
+              disabled={loading}
+              style={{ 
+                padding: '8px 16px',
+                backgroundColor: '#4f46e5',
+                color: 'white',
+                border: 'none',
+                borderRadius: '4px',
+                cursor: 'pointer'
+              }}
+            >
               {loading ? 'Saving...' : 'Save Changes'}
             </button>
           </div>

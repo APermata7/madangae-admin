@@ -14,8 +14,8 @@ const DashboardPage = () => {
       setLoading(true);
       setError(null);
       try {
-        const data = await getDashboardStats();
-        setStats(data);
+        const response = await getDashboardStats();
+        setStats(response.data); // ⬅️ ambil property 'data'
       } catch (err) {
         setError(err.message);
       } finally {
