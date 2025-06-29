@@ -8,3 +8,5 @@ Frontend ReactJS untuk admin Madangae. Admin dapat mengelola data menu makanan d
 - Manajemen data user (lihat, hapus)
 - Komunikasi ke REST API menggunakan fetch
 - UI sederhana dan responsif
+
+### Aplikasi akan berjalan di **http://localhost:3001**
