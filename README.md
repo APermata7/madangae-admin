@@ -1,12 +1,29 @@
-# 🍽️ Madangae Admin
+# 🍽️ Madangae Web Platform
 
-Frontend ReactJS untuk admin Madangae. Admin dapat mengelola data menu makanan dan user yang terdaftar.
+Madangae adalah platform web berbasis ReactJS & Express.js yang menyediakan informasi menu makanan, resep, dan tutorial pembuatan. Sistem ini terdiri dari:
 
-## 📦 Fitur
-- Dashboard admin
-- Manajemen data menu (tambah, edit, hapus)
-- Manajemen data user (lihat, hapus)
-- Komunikasi ke REST API menggunakan fetch
-- UI sederhana dan responsif
+- **madangae-user** : Frontend untuk user umum.
+- **madangae-admin** : Frontend untuk admin.
+- **madangae-api** : Backend REST API.
 
-### Aplikasi akan berjalan di **http://localhost:3001**
+---
+
+## 📌 Deskripsi Aplikasi  
+
+### 🖥️ madangae-admin  
+Aplikasi ReactJS untuk admin:
+- Melihat dashboard data.
+- Mengelola menu makanan.
+- Menghapus akun user.
+
+---
+
+## 📦 Instalasi & Jalankan  
+
+### 1️⃣ madangae-api
+
+```bash
+cd madangae-admin
+npm install
+npm start
+
