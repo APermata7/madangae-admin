@@ -20,7 +20,7 @@ Aplikasi ReactJS untuk admin:
 
 ## 📦 Instalasi & Jalankan  
 
-### 1️⃣ madangae-api
+### 1️⃣ madangae-admin
 
 ```bash
 cd madangae-admin
