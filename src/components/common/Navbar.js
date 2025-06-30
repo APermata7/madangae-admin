@@ -1,3 +1,4 @@
+//components/navbar.js
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { isAdminLoggedIn, adminLogout, getAdminData } from '../../utils/auth';
@@ -38,6 +39,10 @@ const Navbar = () => {
       <div style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
         {isAdminLoggedIn() ? (
           <>
+           <span style={{ fontWeight: '600' }}>
+              {adminData?.name || 'Admin'}
+          </span>
+
             <Link 
               to="/dashboard" 
               style={{ 
@@ -46,6 +51,7 @@ const Navbar = () => {
                 padding: '8px 12px',
                 borderRadius: '4px',
                 transition: 'background-color 0.2s',
+                backgroundColor: 'rgba(255,255,255,0.1)',
                 ':hover': {
                   backgroundColor: 'rgba(255,255,255,0.1)'
                 }
@@ -53,6 +59,7 @@ const Navbar = () => {
             >
               Dashboard
             </Link>
+
             <Link 
               to="/menu-management" 
               style={{ 
@@ -61,6 +68,7 @@ const Navbar = () => {
                 padding: '8px 12px',
                 borderRadius: '4px',
                 transition: 'background-color 0.2s',
+                backgroundColor: 'rgba(255,255,255,0.1)',
                 ':hover': {
                   backgroundColor: 'rgba(255,255,255,0.1)'
                 }
@@ -68,31 +76,29 @@ const Navbar = () => {
             >
               Menu Management
             </Link>
+
             <div style={{ 
               display: 'flex', 
               alignItems: 'center',
               gap: '10px'
             }}>
-              <span style={{ fontWeight: '500' }}>{adminData?.name || 'Admin'}</span>
               <button 
                 onClick={handleLogout}
                 style={{
-                  background: 'rgba(255,255,255,0.1)',
+                  background: '#dc3545',
                   border: 'none',
                   color: 'white',
                   cursor: 'pointer',
-                  padding: '8px 16px',
+                  padding: '8px 12px',
                   borderRadius: '4px',
-                  transition: 'background-color 0.2s',
-                  ':hover': {
-                    backgroundColor: 'rgba(255,255,255,0.2)'
-                  }
+                  transition: 'background-color 0.2s'
                 }}
               >
                 Logout
               </button>
             </div>
           </>
+          
         ) : (
           <>
             <Link 
@@ -111,6 +117,7 @@ const Navbar = () => {
             >
               Login
             </Link>
+
             <Link 
               to="/register" 
               style={{ 

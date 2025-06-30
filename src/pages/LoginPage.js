@@ -1,3 +1,4 @@
+//pages/LoginPage.js
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { setAdminData } from '../utils/auth';
